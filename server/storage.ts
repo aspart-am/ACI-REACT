@@ -269,15 +269,14 @@ export class MemStorage implements IStorage {
       ...axe3OptIndicators
     ];
 
-    // Add core indicators
-    allCoreIndicators.forEach(indicator => {
+    // Add all indicators
+    for (const indicator of allCoreIndicators) {
       this.createIndicator(indicator);
-    });
-
-    // Add optional indicators  
-    allOptionalIndicators.forEach(indicator => {
+    }
+    
+    for (const indicator of allOptionalIndicators) {
       this.createIndicator(indicator);
-    });
+    }
 
     // Create associates
     const associates: InsertAssociate[] = [
@@ -541,8 +540,8 @@ export class MemStorage implements IStorage {
     const validatedCoreMissions = coreMissions.filter(m => m.status === 'validated');
     const validatedOptionalMissions = optionalMissions.filter(m => m.status === 'validated');
     
-    const fixedCompensation = validatedCoreMissions.reduce((sum, m) => sum + m.compensation, 0);
-    const variableCompensation = validatedOptionalMissions.reduce((sum, m) => sum + m.compensation, 0);
+    const fixedCompensation = validatedCoreMissions.reduce((sum, m) => sum + (m.compensation || 0), 0);
+    const variableCompensation = validatedOptionalMissions.reduce((sum, m) => sum + (m.compensation || 0), 0);
     
     const maxFixedCompensation = coreIndicators.reduce((sum, i) => sum + i.maxCompensation, 0);
     const maxVariableCompensation = optionalIndicators.reduce((sum, i) => sum + i.maxCompensation, 0);

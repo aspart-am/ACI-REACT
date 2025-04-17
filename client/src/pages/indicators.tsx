@@ -76,7 +76,36 @@ export default function Indicators() {
         </TabsList>
         
         <TabsContent value={activeTab}>
-          <IndicatorTable indicators={filteredIndicators} />
+          <div className="space-y-6">
+            {activeTab === "all" && (
+              <>
+                <div className="mb-4">
+                  <h2 className="text-lg font-semibold text-primary mb-2">Axe 1: Accès aux soins</h2>
+                  <IndicatorTable 
+                    indicators={filteredIndicators.filter(i => i.code.startsWith('AS') || i.code.startsWith('AO'))} 
+                  />
+                </div>
+                
+                <div className="mb-4">
+                  <h2 className="text-lg font-semibold text-primary mb-2">Axe 2: Travail en équipe / Coordination</h2>
+                  <IndicatorTable 
+                    indicators={filteredIndicators.filter(i => i.code.startsWith('CS') || i.code.startsWith('CO'))} 
+                  />
+                </div>
+                
+                <div className="mb-4">
+                  <h2 className="text-lg font-semibold text-primary mb-2">Axe 3: Système d'information</h2>
+                  <IndicatorTable 
+                    indicators={filteredIndicators.filter(i => i.code.startsWith('SI') || i.code.startsWith('SIO'))} 
+                  />
+                </div>
+              </>
+            )}
+            
+            {activeTab !== "all" && (
+              <IndicatorTable indicators={filteredIndicators} />
+            )}
+          </div>
         </TabsContent>
       </Tabs>
       
