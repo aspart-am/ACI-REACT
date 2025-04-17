@@ -247,8 +247,8 @@ export default function AssociateCard({ associate, missions, indicators }: Assoc
           profession: associate.profession,
           email: associate.email,
           phone: associate.phone || undefined,
-          patientCount: associate.patientCount,
-          activePatients: associate.activePatients
+          patientCount: associate.patientCount === null ? undefined : associate.patientCount,
+          activePatients: associate.activePatients === null ? undefined : associate.activePatients
         }}
       />
 
