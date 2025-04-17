@@ -68,8 +68,12 @@ export default function MissionForm({
   const getDefaultValues = () => {
     if (editingMission) {
       return {
-        ...editingMission,
+        associateId: editingMission.associateId,
+        indicatorId: editingMission.indicatorId,
+        status: editingMission.status,
+        currentValue: editingMission.currentValue || "",
         compensation: editingMission.compensation || 0,
+        notes: editingMission.notes || "",
       };
     }
     
@@ -156,7 +160,12 @@ export default function MissionForm({
     setIsSubmitting(true);
     
     if (editingMission) {
-      updateMission.mutate({ ...data, id: editingMission.id });
+      // Crée un nouvel objet avec les données du formulaire et l'id de la mission en édition
+      const updatedMission = { 
+        ...data, 
+        id: editingMission.id 
+      };
+      updateMission.mutate(updatedMission);
     } else {
       createMission.mutate(data);
     }
