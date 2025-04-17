@@ -147,6 +147,12 @@ export default function AssociateCard({ associate, missions, indicators }: Assoc
               <div className="ml-3">
                 <h3 className="text-lg font-semibold text-gray-800">Dr. {associate.firstName} {associate.lastName}</h3>
                 <p className="text-sm text-gray-600">{getProfessionName(associate.profession)}</p>
+                {associate.profession === "doctor" && associate.patientCount && (
+                  <p className="text-xs text-gray-500 mt-1">
+                    Patients: {associate.patientCount} 
+                    {associate.activePatients && ` (File active: ${associate.activePatients})`}
+                  </p>
+                )}
               </div>
             </div>
             <div>
@@ -240,7 +246,9 @@ export default function AssociateCard({ associate, missions, indicators }: Assoc
           lastName: associate.lastName,
           profession: associate.profession,
           email: associate.email,
-          phone: associate.phone || undefined
+          phone: associate.phone || undefined,
+          patientCount: associate.patientCount,
+          activePatients: associate.activePatients
         }}
       />
 

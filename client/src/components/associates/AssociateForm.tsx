@@ -38,6 +38,8 @@ const associateFormSchema = z.object({
   profession: z.enum(["doctor", "pharmacist", "nurse", "physiotherapist", "other"]),
   email: z.string().email("L'adresse email est invalide"),
   phone: z.string().optional(),
+  patientCount: z.number().int().positive("Le nombre de patients doit être positif").optional(),
+  activePatients: z.number().int().positive("La file active doit être positive").optional(),
 });
 
 type AssociateFormValues = z.infer<typeof associateFormSchema>;
@@ -61,6 +63,8 @@ export default function AssociateForm({ isOpen, onClose, editingAssociate }: Ass
       profession: "doctor",
       email: "",
       phone: "",
+      patientCount: undefined,
+      activePatients: undefined,
     },
   });
   
@@ -231,6 +235,50 @@ export default function AssociateForm({ isOpen, onClose, editingAssociate }: Ass
                 </FormItem>
               )}
             />
+            
+            {form.watch("profession") === "doctor" && (
+              <div className="grid grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="patientCount"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Nombre total de patients</FormLabel>
+                      <FormControl>
+                        <Input 
+                          type="number" 
+                          placeholder="Nombre de patients" 
+                          {...field}
+                          onChange={(e) => field.onChange(e.target.value ? parseInt(e.target.value) : undefined)} 
+                          value={field.value ?? ""}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <FormField
+                  control={form.control}
+                  name="activePatients"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>File active</FormLabel>
+                      <FormControl>
+                        <Input 
+                          type="number" 
+                          placeholder="Patients vus dans l'année" 
+                          {...field}
+                          onChange={(e) => field.onChange(e.target.value ? parseInt(e.target.value) : undefined)}
+                          value={field.value ?? ""}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            )}
             
             <DialogFooter>
               <Button 

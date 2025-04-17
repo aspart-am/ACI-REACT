@@ -59,6 +59,8 @@ export const associates = pgTable("associates", {
   profession: professionEnum("profession").notNull(),
   email: text("email").notNull(),
   phone: text("phone"),
+  patientCount: integer("patient_count"), // Nombre de patients pour les médecins
+  activePatients: integer("active_patients"), // File active des patients
 });
 
 export const insertAssociateSchema = createInsertSchema(associates).pick({
@@ -67,6 +69,8 @@ export const insertAssociateSchema = createInsertSchema(associates).pick({
   profession: true,
   email: true,
   phone: true,
+  patientCount: true,
+  activePatients: true,
 });
 
 export type InsertAssociate = z.infer<typeof insertAssociateSchema>;
