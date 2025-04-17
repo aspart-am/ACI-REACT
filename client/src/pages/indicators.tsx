@@ -6,13 +6,14 @@ import { Filter, Download, Plus, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import IndicatorTable from "@/components/indicators/IndicatorTable";
 import IndicatorForm from "@/components/indicators/IndicatorForm";
+import { type Indicator } from "@shared/schema";
 
 export default function Indicators() {
   const [activeTab, setActiveTab] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [isNewIndicatorFormOpen, setIsNewIndicatorFormOpen] = useState(false);
   
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery<Indicator[]>({
     queryKey: ["/api/indicators"],
   });
   
@@ -33,7 +34,7 @@ export default function Indicators() {
   }
   
   // Filter indicators based on active tab and search query
-  const filteredIndicators = data.filter((indicator: any) => {
+  const filteredIndicators = (data || []).filter((indicator) => {
     const matchesTab = activeTab === "all" || indicator.type === activeTab;
     const matchesSearch = searchQuery === "" || 
       indicator.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

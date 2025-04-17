@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal, Edit, Trash, Eye } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { type Indicator, type Mission } from "@shared/schema";
+import { type Indicator, type Mission, type Associate } from "@shared/schema";
 import IndicatorForm from "./IndicatorForm";
 import IndicatorDetails from "./IndicatorDetails";
 import { apiRequest } from "@/lib/queryClient";
@@ -108,21 +108,21 @@ export default function IndicatorTable({ indicators }: IndicatorTableProps) {
   
   // Function to get mission status for an indicator
   const getMissionStatus = (indicatorId: number) => {
-    const indicatorMissions = missions.filter((m: Mission) => m.indicatorId === indicatorId);
+    const indicatorMissions = missions.filter(m => m.indicatorId === indicatorId);
     if (indicatorMissions.length === 0) return "not_validated";
     
     // If any mission is validated, return validated
-    if (indicatorMissions.some((m: Mission) => m.status === "validated")) return "validated";
+    if (indicatorMissions.some(m => m.status === "validated")) return "validated";
     // If any mission is in progress, return in_progress
-    if (indicatorMissions.some((m: Mission) => m.status === "in_progress")) return "in_progress";
+    if (indicatorMissions.some(m => m.status === "in_progress")) return "in_progress";
     // Otherwise all are not validated
     return "not_validated";
   };
   
   // Function to get mission compensation for an indicator
   const getMissionCompensation = (indicatorId: number) => {
-    const indicatorMissions = missions.filter((m: Mission) => m.indicatorId === indicatorId);
-    return indicatorMissions.reduce((sum, mission: Mission) => sum + mission.compensation, 0);
+    const indicatorMissions = missions.filter(m => m.indicatorId === indicatorId);
+    return indicatorMissions.reduce((sum: number, mission) => sum + (mission.compensation || 0), 0);
   };
   
   const renderStatusBadge = (status: string) => {
