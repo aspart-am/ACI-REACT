@@ -226,7 +226,7 @@ export default function MissionForm({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="" disabled>Indicateurs socles</SelectItem>
+                        <SelectItem value="core-header" disabled>Indicateurs socles</SelectItem>
                         {indicators
                           .filter(i => i.type === "core")
                           .map((indicator) => (
@@ -234,7 +234,7 @@ export default function MissionForm({
                               {indicator.code} - {indicator.name}
                             </SelectItem>
                           ))}
-                        <SelectItem value="" disabled>Indicateurs optionnels</SelectItem>
+                        <SelectItem value="optional-header" disabled>Indicateurs optionnels</SelectItem>
                         {indicators
                           .filter(i => i.type === "optional")
                           .map((indicator) => (
