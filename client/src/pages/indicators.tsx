@@ -5,10 +5,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Filter, Download, Plus, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import IndicatorTable from "@/components/indicators/IndicatorTable";
+import IndicatorForm from "@/components/indicators/IndicatorForm";
 
 export default function Indicators() {
   const [activeTab, setActiveTab] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [isNewIndicatorFormOpen, setIsNewIndicatorFormOpen] = useState(false);
   
   const { data, isLoading, error } = useQuery({
     queryKey: ["/api/indicators"],
@@ -58,7 +60,7 @@ export default function Indicators() {
           <Button variant="outline" size="icon">
             <Filter className="h-4 w-4" />
           </Button>
-          <Button>
+          <Button onClick={() => setIsNewIndicatorFormOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
             Nouvel Indicateur
           </Button>
@@ -76,6 +78,12 @@ export default function Indicators() {
           <IndicatorTable indicators={filteredIndicators} />
         </TabsContent>
       </Tabs>
+      
+      {/* Formulaire pour créer un nouvel indicateur */}
+      <IndicatorForm
+        isOpen={isNewIndicatorFormOpen}
+        onClose={() => setIsNewIndicatorFormOpen(false)}
+      />
     </div>
   );
 }

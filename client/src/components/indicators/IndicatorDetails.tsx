@@ -4,7 +4,8 @@ import {
   DialogContent, 
   DialogDescription, 
   DialogHeader, 
-  DialogTitle 
+  DialogTitle,
+  DialogFooter
 } from "@/components/ui/dialog";
 import { 
   Card, 
@@ -52,7 +53,7 @@ export default function IndicatorDetails({
   const status = getOverallStatus();
   
   // Calculate total compensation
-  const totalCompensation = indicatorMissions.reduce((sum, m) => sum + m.compensation, 0);
+  const totalCompensation = indicatorMissions.reduce((sum, m) => sum + (m.compensation || 0), 0);
   
   // Get associates with this indicator
   const associatesWithMission = indicatorMissions.map(mission => {
@@ -155,7 +156,7 @@ export default function IndicatorDetails({
                           </div>
                           <div className="text-right">
                             <p className="text-gray-700">
-                              <span className="font-medium">{mission.compensation.toLocaleString('fr-FR')} €</span>
+                              <span className="font-medium">{(mission.compensation || 0).toLocaleString('fr-FR')} €</span>
                               {mission.status !== "validated" && (
                                 <span className="text-gray-400"> / {indicator.maxCompensation.toLocaleString('fr-FR')} €</span>
                               )}
@@ -173,7 +174,6 @@ export default function IndicatorDetails({
                 ) : (
                   <div className="text-center py-8">
                     <p className="text-gray-500">Aucune mission assignée pour cet indicateur</p>
-                    <Button className="mt-4">Assigner une mission</Button>
                   </div>
                 )}
               </CardContent>
@@ -196,7 +196,7 @@ export default function IndicatorDetails({
                                 <span className="text-sm text-gray-500 mr-2">Statut:</span>
                                 {renderStatusBadge(status)}
                               </div>
-                              <p className="font-medium">{compensation.toLocaleString('fr-FR')} €</p>
+                              <p className="font-medium">{(compensation || 0).toLocaleString('fr-FR')} €</p>
                             </div>
                           </>
                         )}
@@ -213,10 +213,9 @@ export default function IndicatorDetails({
           </TabsContent>
         </Tabs>
         
-        <div className="flex justify-end space-x-2 mt-4">
+        <DialogFooter className="flex justify-end space-x-2 mt-4">
           <Button variant="outline" onClick={onClose}>Fermer</Button>
-          <Button>Modifier l'indicateur</Button>
-        </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
