@@ -75,93 +75,207 @@ export class MemStorage implements IStorage {
   }
 
   private initializeData() {
-    // Create core indicators
-    const coreIndicators: InsertIndicator[] = [
+    // AXE 1: Accès aux soins - Indicateurs Socles et Prérequis
+    const axe1SocleIndicators: InsertIndicator[] = [
       {
-        code: "S01",
-        name: "Système d'information",
-        description: "Mise en place d'un système d'information partagé",
+        code: "AS01",
+        name: "Horaires d'ouverture et soins non programmés",
+        description: "Amplitude horaire d'ouverture et accès à des soins non programmés chaque jour ouvré",
         type: "core",
         objective: "100%",
-        maxCompensation: 7200
+        maxCompensation: 4000 // 800 points × 5€
       },
       {
-        code: "S02",
-        name: "Agenda partagé",
-        description: "Mise en place d'un agenda partagé",
+        code: "AS02",
+        name: "Réponse aux crises sanitaires graves",
+        description: "Rédaction d'un plan de préparation à la réponse de crise sanitaire et mise en œuvre d'actions",
         type: "core",
-        objective: "100%",
-        maxCompensation: 4800
-      },
-      {
-        code: "S03",
-        name: "Protocoles pluriprofessionnels",
-        description: "Élaboration de protocoles pluriprofessionnels",
-        type: "core",
-        objective: "Min. 8",
-        maxCompensation: 6400
-      },
-      {
-        code: "S04",
-        name: "Concertation pluriprofessionnelle",
-        description: "Organisation de réunions de concertation pluriprofessionnelles",
-        type: "core",
-        objective: "Min. 12 réunions",
-        maxCompensation: 5600
-      },
-      {
-        code: "S05",
-        name: "Formation ETP patients",
-        description: "Formation d'éducation thérapeutique pour les patients",
-        type: "core",
-        objective: "40 patients",
-        maxCompensation: 5200
+        objective: "Rédaction du plan (prérequis) + actions en cas de crise",
+        maxCompensation: 2250 // (100 points + 350 points) × 5€
       }
     ];
 
-    // Create optional indicators
-    const optionalIndicators: InsertIndicator[] = [
+    // AXE 1: Accès aux soins - Indicateurs Optionnels
+    const axe1OptIndicators: InsertIndicator[] = [
       {
-        code: "O01",
-        name: "Coordination externe",
-        description: "Coordination avec les acteurs externes",
+        code: "AO01",
+        name: "Diversité des services de soins",
+        description: "Offre d'une diversité de services de soins médicaux spécialisés ou de pharmaciens et/ou de soins paramédicaux",
         type: "optional",
-        objective: "Min. 4 partenariats",
-        maxCompensation: 3500
+        objective: "Diversité des catégories de professionnels",
+        maxCompensation: 2250 // 450 points × 5€
       },
       {
-        code: "O02",
-        name: "Prévention santé",
-        description: "Actions de prévention en santé publique",
+        code: "AO02",
+        name: "Consultations de spécialistes",
+        description: "Consultations de spécialistes de second recours ou sages-femmes ou chirurgiens-dentistes ou pharmaciens vacataires",
         type: "optional",
-        objective: "Min. 6 actions",
-        maxCompensation: 4200
+        objective: "Organisation effective",
+        maxCompensation: 1000 // 200 points × 5€
       },
       {
-        code: "O03",
-        name: "Coordination interne",
-        description: "Coordination interne des soins",
+        code: "AO03",
+        name: "Accueil de médecins en CSTM",
+        description: "Accueil de médecins intervenant dans la structure dans le cadre d'un Contrat de Solidarité Territoriale Médecin",
         type: "optional",
-        objective: "90% des patients",
-        maxCompensation: 3800
+        objective: "Présence effective d'un médecin en CSTM",
+        maxCompensation: 1000 // 200 points × 5€
       },
       {
-        code: "O04",
-        name: "Qualité des soins",
-        description: "Mesures pour améliorer la qualité des soins",
+        code: "AO04",
+        name: "Missions de santé publique",
+        description: "Participation à des missions de santé publique (vaccination, dépistage, prévention, etc.)",
         type: "optional",
-        objective: "3 indicateurs",
-        maxCompensation: 4000
+        objective: "Min. 4 missions",
+        maxCompensation: 1750 // 350 points × 5€
+      },
+      {
+        code: "AO05",
+        name: "Implication des usagers",
+        description: "Mise en place d'une démarche d'implication des usagers",
+        type: "optional",
+        objective: "Démarche effective",
+        maxCompensation: 1000 // 200 points × 5€
+      },
+      {
+        code: "AO06",
+        name: "SAS - Service d'Accès aux Soins",
+        description: "Soins non programmés en lien avec le dispositif de Service d'Accès aux Soins",
+        type: "optional",
+        objective: "Participation effective au SAS",
+        maxCompensation: 1250 // 250 points × 5€
       }
+    ];
+
+    // AXE 2: Travail en équipe et coordination - Indicateurs Socles et Prérequis
+    const axe2SoclePrerequisIndicators: InsertIndicator[] = [
+      {
+        code: "CS01",
+        name: "Fonction de coordination",
+        description: "Mise en place d'une fonction de coordination bien identifiée et temps dédié",
+        type: "core",
+        objective: "Temps dédié à la coordination et outils disponibles",
+        maxCompensation: 7000 // 1400 points × 5€
+      }
+    ];
+
+    // AXE 2: Travail en équipe et coordination - Indicateurs Socles
+    const axe2SocleIndicators: InsertIndicator[] = [
+      {
+        code: "CS02",
+        name: "Protocoles pluriprofessionnels",
+        description: "Élaboration et mise en œuvre de protocoles pluriprofessionnels pour la prise en charge de patients à risque de fragilité",
+        type: "core",
+        objective: "Min. 8 protocoles",
+        maxCompensation: 5000 // 1000 points × 5€
+      },
+      {
+        code: "CS03",
+        name: "Concertation pluriprofessionnelle",
+        description: "Organisation de réunions de concertation pluriprofessionnelles sur les dossiers patients",
+        type: "core",
+        objective: "Min. 12 réunions/an",
+        maxCompensation: 5000 // 1000 points × 5€
+      }
+    ];
+
+    // AXE 2: Travail en équipe et coordination - Indicateurs Optionnels
+    const axe2OptIndicators: InsertIndicator[] = [
+      {
+        code: "CO01",
+        name: "Formation professionnels de santé",
+        description: "Accueil et formation de professionnels de santé (stagiaires médicaux et paramédicaux)",
+        type: "optional",
+        objective: "Accueil effectif de stagiaires",
+        maxCompensation: 2500 // 500 points × 5€
+      },
+      {
+        code: "CO02",
+        name: "Coordination externe",
+        description: "Coordination avec acteurs médico-sociaux et sociaux (EHPAD, SSIAD, etc.)",
+        type: "optional",
+        objective: "Min. 4 partenariats formalisés",
+        maxCompensation: 2000 // 400 points × 5€
+      },
+      {
+        code: "CO03",
+        name: "Démarche qualité",
+        description: "Mise en place d'une démarche d'évaluation et d'amélioration des pratiques",
+        type: "optional",
+        objective: "Démarche effective et formalisée",
+        maxCompensation: 2000 // 400 points × 5€
+      },
+      {
+        code: "CO04",
+        name: "Protocoles soins non programmés",
+        description: "Mise en place de protocoles nationaux de coopération pour les soins non programmés",
+        type: "optional",
+        objective: "Application effective des protocoles",
+        maxCompensation: 1750 // 350 points × 5€
+      },
+      {
+        code: "CO05",
+        name: "Parcours insuffisance cardiaque",
+        description: "Coordination d'un parcours insuffisance cardiaque avec télésurveillance",
+        type: "optional",
+        objective: "Min. 5 patients suivis",
+        maxCompensation: 2250 // 450 points × 5€
+      },
+      {
+        code: "CO06",
+        name: "Parcours obésité enfant",
+        description: "Coordination d'un parcours 'surpoids ou obésité de l'enfant'",
+        type: "optional",
+        objective: "Parcours formalisé et effectif",
+        maxCompensation: 2000 // 400 points × 5€
+      }
+    ];
+
+    // AXE 3: Système d'information - Indicateur Socle et Prérequis
+    const axe3SocleIndicators: InsertIndicator[] = [
+      {
+        code: "SI01",
+        name: "Système d'information niveau standard",
+        description: "Système d'information conforme au référentiel établi par l'ANS (niveau standard)",
+        type: "core",
+        objective: "Utilisation par tous les professionnels",
+        maxCompensation: 4000 // 800 points × 5€
+      }
+    ];
+
+    // AXE 3: Système d'information - Indicateur Optionnel
+    const axe3OptIndicators: InsertIndicator[] = [
+      {
+        code: "SIO1",
+        name: "Système d'information niveau avancé",
+        description: "Système d'information conforme au référentiel établi par l'ANS (niveau avancé)",
+        type: "optional",
+        objective: "Déploiement et utilisation effective",
+        maxCompensation: 2000 // 400 points × 5€
+      }
+    ];
+    
+    // Initialize all indicators for calculation and display
+    const allCoreIndicators: InsertIndicator[] = [
+      ...axe1SocleIndicators,
+      ...axe2SoclePrerequisIndicators, 
+      ...axe2SocleIndicators,
+      ...axe3SocleIndicators
+    ];
+    
+    const allOptionalIndicators: InsertIndicator[] = [
+      ...axe1OptIndicators,
+      ...axe2OptIndicators,
+      ...axe3OptIndicators
     ];
 
     // Add core indicators
-    coreIndicators.forEach(indicator => {
+    allCoreIndicators.forEach(indicator => {
       this.createIndicator(indicator);
     });
 
-    // Add optional indicators
-    optionalIndicators.forEach(indicator => {
+    // Add optional indicators  
+    allOptionalIndicators.forEach(indicator => {
       this.createIndicator(indicator);
     });
 
@@ -194,88 +308,88 @@ export class MemStorage implements IStorage {
     const createdAssociates = associates.map(associate => this.createAssociate(associate));
 
     // Create missions
-    // For Martin Dubois (validated missions)
+    // Pour Martin Dubois (missions validées)
     this.createMission({
       associateId: 1,
-      indicatorId: 1, // S01
+      indicatorId: 1, // AS01 - Horaires d'ouverture et soins non programmés
       status: "validated",
-      currentValue: "Completed",
-      compensation: 7200,
-      notes: "Système mis en place et pleinement fonctionnel"
+      currentValue: "41h/semaine",
+      compensation: 4000,
+      notes: "Amplitude horaire respectée et soins non programmés disponibles"
     });
 
     this.createMission({
       associateId: 1,
-      indicatorId: 5, // S05
+      indicatorId: 6, // CS01 - Fonction de coordination
       status: "validated",
-      currentValue: "42 patients",
-      compensation: 5200,
-      notes: "Formation ETP réalisée avec succès"
+      currentValue: "10h par semaine",
+      compensation: 7000,
+      notes: "Temps dédié à la coordination bien défini et occupé par l'associé"
     });
 
     this.createMission({
       associateId: 1,
-      indicatorId: 6, // O01
+      indicatorId: 10, // CO01 - Formation de professionnels de santé
       status: "in_progress",
-      currentValue: "2 partenariats",
+      currentValue: "1 stagiaire",
       compensation: 0,
-      notes: "En cours avec l'hôpital local et le CCAS"
+      notes: "Un stagiaire en médecine générale accueilli, en attente d'un second"
     });
 
-    // For Sophie Lefevre
+    // Pour Sophie Lefevre
     this.createMission({
       associateId: 2,
-      indicatorId: 2, // S02
+      indicatorId: 2, // AS02 - Réponse aux crises sanitaires graves
       status: "validated",
-      currentValue: "Completed",
-      compensation: 4800,
-      notes: "Agenda partagé mis en place"
+      currentValue: "Plan rédigé et mis en œuvre",
+      compensation: 2250,
+      notes: "Plan de crise rédigé et une intervention lors d'un pic épidémique"
     });
 
     this.createMission({
       associateId: 2,
-      indicatorId: 8, // O03
-      status: "validated",
-      currentValue: "92%",
-      compensation: 3800,
-      notes: "Système de coordination interne efficace"
-    });
-
-    this.createMission({
-      associateId: 2,
-      indicatorId: 4, // S04
-      status: "not_validated",
-      currentValue: "4 réunions",
-      compensation: 0,
-      notes: "Nombre insuffisant de réunions"
-    });
-
-    // For Philippe Moreau
-    this.createMission({
-      associateId: 3,
-      indicatorId: 3, // S03
+      indicatorId: 7, // CS02 - Protocoles pluriprofessionnels
       status: "validated",
       currentValue: "9 protocoles",
-      compensation: 6400,
+      compensation: 5000,
       notes: "Protocoles bien documentés et mis en œuvre"
     });
 
     this.createMission({
-      associateId: 3,
-      indicatorId: 7, // O02
-      status: "in_progress",
-      currentValue: "3 actions",
+      associateId: 2,
+      indicatorId: 11, // CO02 - Coordination externe
+      status: "not_validated",
+      currentValue: "2 partenariats",
       compensation: 0,
-      notes: "Actions préventives en cours de réalisation"
+      notes: "Partenariats avec EHPAD et SSIAD, mais nombre insuffisant"
+    });
+
+    // Pour Philippe Moreau
+    this.createMission({
+      associateId: 3,
+      indicatorId: 8, // CS03 - Concertation pluriprofessionnelle
+      status: "validated",
+      currentValue: "15 réunions",
+      compensation: 5000,
+      notes: "Réunions régulières documentées avec compte-rendus"
     });
 
     this.createMission({
       associateId: 3,
-      indicatorId: 9, // O04
-      status: "not_validated",
-      currentValue: "1 indicateur",
+      indicatorId: 3, // AO01 - Diversité des services de soins
+      status: "in_progress",
+      currentValue: "4 catégories",
       compensation: 0,
-      notes: "Indicateurs de qualité insuffisants"
+      notes: "Médecins, pharmaciens, infirmiers et kinés disponibles"
+    });
+
+    this.createMission({
+      associateId: 3,
+      indicatorId: 9, // SI01 - Système d'information niveau standard
+      status: "validated",
+      currentValue: "Déployé et utilisé par tous",
+      compensation: 4000,
+      notes: "Logiciel conforme au référentiel ANS et utilisé par 100% des professionnels"
     });
   }
 
