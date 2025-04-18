@@ -5,7 +5,7 @@ import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
 export default defineConfig({
-  base: '/ACI-REACT/',
+  base: '/',
   plugins: [
     react(),
     runtimeErrorOverlay(),
@@ -29,7 +29,7 @@ export default defineConfig({
   // Changed from "client" to "." to use the root directory
   root: path.resolve(import.meta.dirname, "."),
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist"),
+    outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
   },
 });
