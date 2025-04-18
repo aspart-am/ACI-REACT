@@ -5,7 +5,7 @@ import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
 export default defineConfig({
-  base:'/ACI-REACT/',
+  base: '/ACI-REACT/',
   plugins: [
     react(),
     runtimeErrorOverlay(),
