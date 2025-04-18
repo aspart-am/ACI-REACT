@@ -1,6 +1,6 @@
 {
   "homepage": "https://aspart-am.github.io/ACI-REACT",
-  "name": "rest-express",
+  "name": "aci-react",
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "dev": "vite",
-    "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
+    "build": "vite build",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc",
     "db:push": "drizzle-kit push"
@@ -66,6 +66,7 @@
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.1",
+    "react-router-dom": "^6.0.0",
     "react-icons": "^5.4.0",
     "react-resizable-panels": "^2.1.4",
     "recharts": "^2.13.0",
